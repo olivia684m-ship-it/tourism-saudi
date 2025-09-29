@@ -1,0 +1,147 @@
+‏<!DOCTYPE html>
+‏<html lang="ar">
+‏<head>
+‏<meta charset="UTF-8">
+‏<title>موقعي التفاعلي للسياحة في السعودية</title>
+‏<style>
+‏  body { font-family: Arial; text-align: center; margin: 20px; }
+‏  #map img { width: 600px; max-width: 90%; cursor: pointer; }
+‏  #challengeDisplay { margin-top: 20px; padding: 15px; border: 2px solid #444; display: inline-block; text-align: center; min-width: 300px; }
+‏  .prize { margin-top: 5px; color: green; font-weight: bold; }
+‏  button, select { padding: 10px 15px; margin: 5px; font-size: 16px; cursor: pointer; }
+‏  img.challenge-img { width: 300px; margin-top: 10px; border: 1px solid #333; }
+‏</style>
+‏</head>
+‏<body>
+
+‏<h1>موقعي التفاعلي للسياحة في السعودية</h1>
+
+‏<select id="languageSelect">
+‏  <option value="ar">العربية</option>
+‏  <option value="en">English</option>
+‏</select>
+
+‏<div id="map">
+‏  <img src="saudi-map.jpg" usemap="#ksaMap" alt="خريطة المملكة">
+‏  <map name="ksaMap">
+‏    <area shape="poly" coords="280,160,310,150,320,180,290,190" alt="Riyadh" id="Riyadh">
+‏    <area shape="poly" coords="200,200,230,180,250,210,220,220" alt="Makkah" id="Makkah">
+‏    <area shape="poly" coords="200,120,230,100,250,130,220,140" alt="Madinah" id="Madinah">
+‏    <area shape="poly" coords="400,100,430,80,450,110,420,130" alt="Eastern" id="Eastern">
+‏    <area shape="poly" coords="300,80,330,60,350,90,320,100" alt="Qassim" id="Qassim">
+‏    <area shape="poly" coords="150,250,180,230,200,260,170,270" alt="Asir" id="Asir">
+‏    <area shape="poly" coords="100,50,130,30,150,60,120,70" alt="Tabuk" id="Tabuk">
+‏    <area shape="poly" coords="250,150,280,130,300,160,270,170" alt="Hail" id="Hail">
+‏    <area shape="poly" coords="50,200,80,180,100,210,70,220" alt="Najran" id="Najran">
+‏    <area shape="poly" coords="350,50,380,30,400,60,370,70" alt="AlJawf" id="AlJawf">
+‏    <area shape="poly" coords="10,10,40,10,40,40,10,40" alt="NorthernBorders" id="NorthernBorders">
+‏    <area shape="poly" coords="60,250,90,230,110,260,80,270" alt="Jazan" id="Jazan">
+‏    <area shape="poly" coords="120,180,150,160,170,190,140,200" alt="AlBaha" id="AlBaha">
+‏    <area shape="poly" coords="50,50,80,30,100,60,70,70" alt="TabukNorthWest" id="TabukNorthWest">
+‏  </map>
+‏</div>
+
+‏<div id="challengeDisplay">
+‏  <p>اضغط على أي منطقة لتبدأ التحديات!</p>
+‏</div>
+
+‏<div id="prizes">
+‏  <p id="prize-Riyadh" class="prize"></p>
+‏  <p id="prize-Makkah" class="prize"></p>
+‏  <p id="prize-Madinah" class="prize"></p>
+‏  <p id="prize-Eastern" class="prize"></p>
+‏  <p id="prize-Qassim" class="prize"></p>
+‏  <p id="prize-Asir" class="prize"></p>
+‏  <p id="prize-Tabuk" class="prize"></p>
+‏  <p id="prize-Hail" class="prize"></p>
+‏  <p id="prize-Najran" class="prize"></p>
+‏  <p id="prize-AlJawf" class="prize"></p>
+‏  <p id="prize-NorthernBorders" class="prize"></p>
+‏  <p id="prize-Jazan" class="prize"></p>
+‏  <p id="prize-AlBaha" class="prize"></p>
+‏  <p id="prize-TabukNorthWest" class="prize"></p>
+‏</div>
+
+‏<script>
+‏let currentLang = "ar";
+
+// صور لكل منطقة (استبدلها بصورك لاحقًا)
+‏const regionImages = {
+‏  Riyadh: "riyadh.jpg",
+‏  Makkah: "makkah.jpg",
+‏  Madinah: "madinah.jpg",
+‏  Eastern: "eastern.jpg",
+‏  Qassim: "qassim.jpg",
+‏  Asir: "asir.jpg",
+‏  Tabuk: "tabuk.jpg",
+‏  Hail: "hail.jpg",
+‏  Najran: "najran.jpg",
+‏  AlJawf: "aljawf.jpg",
+‏  NorthernBorders: "northernborders.jpg",
+‏  Jazan: "jazan.jpg",
+‏  AlBaha: "albaha.jpg",
+‏  TabukNorthWest: "tabuknw.jpg"
+};
+
+// التحديات والجائز لكل منطقة
+‏const texts = {
+‏  ar: {
+‏    challenges: {
+‏      Riyadh: [
+‏        {type:"ثقافية", description:"زيارة متحف الرياض الوطني"},
+‏        {type:"تراثية", description:"استكشاف حي الطريف في الدرعية"},
+‏        {type:"حديثة", description:"الصعود إلى برج المملكة ومشاهدة المدينة"}
+      ],
+‏      Makkah: [
+‏        {type:"ثقافية", description:"المشاركة في درس تعليمي داخل الحرم المكي"},
+‏        {type:"تراثية", description:"جولة في مكة القديمة والأسواق التقليدية"},
+‏        {type:"حديثة", description:"زيارة مول مكة وتجربة الأماكن الحديثة"}
+      ],
+‏      Madinah: [
+‏        {type:"ثقافية", description:"زيارة المسجد النبوي والتعرف على تاريخه"},
+‏        {type:"تراثية", description:"جولة في المدينة القديمة وزيارة الأسواق التقليدية"},
+‏        {type:"حديثة", description:"زيارة متحف المدينة الحديث ومرافقه"}
+      ],
+‏      Eastern: [
+‏        {type:"ثقافية", description:"التعرف على التراث البحري في كورنيش الدمام"},
+‏        {type:"تراثية", description:"زيارة القلاع القديمة ومتحف المنطقة الشرقية"},
+‏        {type:"حديثة", description:"استكشاف مركز الملك عبد الله المالي والعمارة الحديثة"}
+      ],
+‏      Qassim: [
+‏        {type:"ثقافية", description:"زيارة متحف القصيم"},
+‏        {type:"تراثية", description:"جولة في القرى التراثية وتجربة الحرف اليدوية"},
+‏        {type:"حديثة", description:"زيارة الحدائق العامة والمولات الحديثة"}
+      ],
+‏      Asir: [
+‏        {type:"ثقافية", description:"زيارة متحف أبها للفنون والثقافة"},
+‏        {type:"تراثية", description:"التجول في القرى الجبلية القديمة"},
+‏        {type:"حديثة", description:"زيارة الجسور والمباني الحديثة في أبها"}
+      ],
+‏      Tabuk: [
+‏        {type:"ثقافية", description:"زيارة قلعة تبوك والتعرف على تاريخها"},
+‏        {type:"تراثية", description:"استكشاف المواقع الأثرية القديمة"},
+‏        {type:"حديثة", description:"جولة في المدينة الحديثة والمشاريع الجديدة"}
+      ],
+‏      Hail: [
+‏        {type:"ثقافية", description:"زيارة متحف حائل للتعرف على تاريخ المنطقة"},
+‏        {type:"تراثية", description:"استكشاف القلاع والمنازل القديمة"},
+‏        {type:"حديثة", description:"زيارة المباني الحديثة والحدائق العامة"}
+      ],
+‏      Najran: [
+‏        {type:"ثقافية", description:"زيارة متحف نجران"},
+‏        {type:"تراثية", description:"استكشاف القصور التراثية"},
+‏        {type:"حديثة", description:"زيارة المشاريع الحديثة في المنطقة"}
+      ],
+‏      AlJawf: [
+‏        {type:"ثقافية", description:"زيارة المواقع التاريخية"},
+‏        {type:"تراثية", description:"استكشاف القرى القديمة"},
+‏        {type:"حديثة", description:"زيارة المعالم الحديثة"}
+      ],
+‏      NorthernBorders: [
+‏        {type:"ثقافية", description:"زيارة المتاحف المحلية"},
+‏        {type:"تراثية", description:"استكشاف المواقع القديمة"},
+‏        {type:"حديثة", description:"زيارة المباني الحديثة"}
+      ],
+‏      Jazan: [
+‏        {type:"ثقافية", description:"زيارة متحف جازان"},
+	‏        {type:"تراثية
